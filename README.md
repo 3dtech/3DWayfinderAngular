@@ -1,7 +1,7 @@
 # 3DWayfinderAngular
 Angular Service for 3D Wayfinder
 
--- Getting started 
+## Getting started 
 Please include the following JavaScript files into Your HTML file:
 
 ```javascript
