@@ -1,0 +1,24 @@
+{
+  "name": "3dwayfinder-angular",
+  "main": "index.js",
+  "license": "GPL-3.0",
+  "ignore": [
+    "!lib",
+    "lib/*",
+    "!lib/browser.js",
+    "index.js"
+  ],
+  "keywords": [
+    "3dwayfinder",
+    "architecture visualisation",
+    "angular",
+    "binding"
+  ],
+  "authors": [
+    "3D Technologies R&D <developers@3dwayfinder.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/3dtech/3DWayfinderAngular.git"
+  }
+}

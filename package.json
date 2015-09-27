@@ -1,0 +1,24 @@
+{
+  "name": "3dwayfinder-angular",
+  "version": "0.0.1",
+  "description": "Angular service for 3D Wayfinder",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3dtech/3DWayfinderAngular.git"
+  },
+  "keywords": [
+    "3d",
+    "interactive",
+    "architecture",
+    "visualisation"
+  ],
+  "author": "3D Technologies R&D",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/3dtech/3DWayfinderAngular/issues"
+  },
+  "homepage": "https://github.com/3dtech/3DWayfinderAngular#readme"
+}
