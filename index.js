@@ -7,7 +7,7 @@ wfangular.factory('wfangular3d', ['$rootScope', function($rootScope) {
   return wf;
 }]);
 
-wfangular.filter('wfCurrentLanguage', ['wfangular3d', function(language, wayfinder) {
+wfangular.filter('wfCurrentLanguage', ['wfangular3d', function(wayfinder) {
   return function(input) {
   	if(input && typeof input === "object" && input[wayfinder.getLanguage()]){
     	return input[wayfinder.getLanguage()];
