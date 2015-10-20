@@ -4,6 +4,23 @@ wfangular.factory('wfangular3d', ['$rootScope', function($rootScope) {
   wf.onDataLoaded = function(){
   	$rootScope.$broadcast('wf.data.loaded', []);
   }
+
+  wf.cbOnPOIClick = function(poi){
+    $rootScope.$broadcast('wf.poi.click', poi);
+  }
+
+  wf.cbOnLanguageChange = function(language){
+    $rootScope.$broadcast('wf.language.change', language);
+  }
+ 
+  wf.cbOnFloorChange = function(floor){
+    $rootScope.$broadcast('wf.floor.change', floor);
+  }
+
+  wf.cbOnZoomChange = function(zoom){
+    $rootScope.$broadcast('wf.zoom.change', zoom);
+  }
+
   return wf;
 }]);
 
