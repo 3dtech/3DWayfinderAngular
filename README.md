@@ -20,3 +20,10 @@ Please include the following JavaScript files into Your HTML file and inject wfa
     }]);
 </script>
 ```
+## Broadcasted events
+* wf.data.loaded - broadcasted when all data is loaded
+* wf.poi.click - broadcasted when user clicks on map. Arguments: POI
+* wf.language.change - broadcasted when language is changed. Arguments: language code {string} (eg en, de etc)
+* wf.floor.change - broadcasted when floor is changed. Arguments: Floor
+* wf.zoom.change - broadcasted when zoom is changed. Arguments: zoom {float}
+* wf.path.floor.change - broadcasted when path animation changes floor: Arguments: Object {current: Floor, next: Floor, destination: Floor}

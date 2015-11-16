@@ -21,6 +21,10 @@ wfangular.factory('wfangular3d', ['$rootScope', function($rootScope) {
     $rootScope.$broadcast('wf.zoom.change', zoom);
   }
 
+  wf.onBeforeFloorChange = function(currentFloor, nextFloor, destinationFloor){
+    $rootScope.$broadcast('wf.path.floor.change', {current: currentFloor, next: nextFloor, destination: destinationFloor});
+  }
+
   return wf;
 }]);
 
