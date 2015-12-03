@@ -4,8 +4,21 @@
 	<title>Basic test</title>
 </head>
 
+<style>
+	html, body {
+		width: 100%;
+		height: 100%;
+	}
+
+	.banner {
+		width: 30%; 
+		height: 100%;
+		float: right;
+	}
+</style>
+
 <body ng-app="basictest">
-	<canvas id="map" width="400" height="300" ng-controller="BasicController">
+	<canvas id="map" width="400" height="300" ng-controller="BasicController"></canvas>
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 	<script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/frak-stable.min.js"></script>
 	<script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/Wayfinder3D.min.js"></script>
@@ -27,5 +40,7 @@
 				});
 			}]);
 	</script>
+
+	<div id="advertisements" template="default" wf-banner class="banner"></div>
 </body>
 </html>

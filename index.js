@@ -26,7 +26,7 @@ wfangular.factory('wfangular3d', ['$rootScope', function($rootScope) {
 	}
 
 	wf.cbOnTouch = function(type, value){
-		$rootScope.$broadcast('wf.touch', {type: type, value: value, destination: destinationFloor});
+		$rootScope.$broadcast('wf.touch', {type: type, value: value});
 	}
 
 	return wf;
@@ -48,7 +48,7 @@ wfangular.filter('wfCurrentLanguage', ['wfangular3d', function(wayfinder) {
 	};
 }]);
 
-wfangular.directive('wfBanner', ['$interval', '$compile', 'wfangular3d', function($interval, $compile, wayfinder) {
+wfangular.directive('wfBanner', ['$interval', 'wfangular3d', '$timeout', function($interval, wayfinder, $timeout) {
 	return	{
 			restrict: 'EA',
 			scope: {
@@ -59,6 +59,7 @@ wfangular.directive('wfBanner', ['$interval', '$compile', 'wfangular3d', functio
 				var current = 0;
 				var timer = null;
 				var id = false;
+				var template = "default";
 
 				//watch id attribute for the banner placement
 				$scope.$watch(function() {
@@ -71,15 +72,28 @@ wfangular.directive('wfBanner', ['$interval', '$compile', 'wfangular3d', functio
 					}
 				);
 
+				$scope.$watch(function() {
+						return $element.attr('template');
+					}, 
+					function() {
+						if (!!$attrs.template && $attrs.template !== "") {
+							template = $attrs.template;					
+						}
+					}
+				);
+
         $scope.$on('wf.data.loaded', function(event, data){
           setup();
         });
 
 				function setup(){
-					var tpl = '<div style="position: absolute; background-size: cover; background-position: 50% 50%; background-repeat: no-repeat; left: {1}%; top: {2}%; width: {3}%; height: {4}%; {5}" data-id="{0}">';
+					var tpl = '<div style="position: absolute; background-size: cover; background-position: 50% 50%; background-repeat: no-repeat; left: {1}%; top: {2}%; width: {3}%; height: {4}%; {5}" data-id="{0}"></div>';
+				
+					if(wayfinder.advertisements["template-"+template] && wayfinder.advertisements["template-"+template][id])
+						frames = wayfinder.advertisements["template-"+template][id];
 
-					for (var i=0; i<this.frames.length; i++) {
-						var frame = this.frames[i];
+					for (var i=0; i < frames.length; i++) {
+						var frame = frames[i];
 						frame.element = $('<div style="position: relative; width: 100%; height: 100%;">');
 						for (var j=0; j<frame.containers.length; j++) {
 							var container = frame.containers[j];
@@ -87,14 +101,14 @@ wfangular.directive('wfBanner', ['$interval', '$compile', 'wfangular3d', functio
 							if (container.advertisement_id>0 && !(container.type && container.type.substr(0, 5) == 'video')) {
 								image = "background-image: url('{0}');".format(WayfinderAPI.advertisements.data.url(container.advertisement_id));
 							}
-							container.element = $(tplSubcontainer.format(
+							container.element = $(tpl.format(
 								container.id,
 								container.left,
 								container.top,
 								container.width,
 								container.height,
 								image));
-							if (container.advertisement_id>0 && container.type.substr(0, 5) === 'video') {
+							if (container.advertisement_id > 0 && container.type.substr(0, 5) === 'video') {
 								container.element.append($('<video width="100%" height="auto" src="{0}" loop></video>'.format(
 									WayfinderAPI.advertisements.data.url(container.advertisement_id))));
 							}
@@ -102,21 +116,46 @@ wfangular.directive('wfBanner', ['$interval', '$compile', 'wfangular3d', functio
 						}
 						frame.element.hide();
 					}
-
-          tpl += "</div>";
+					
+          play();
 				}
 
-				$element.append($compile($element.contents())($scope));
+				function play() {
+					if (current >= frames.length)
+						return;
+					var frame = frames[current];
+					frame.element.show();
+					$element.empty().append(frame.element);
+					for (var i=0; i<frame.containers.length; i++) {
+						if (frame.containers[i].type && frame.containers[i].type.substr(0, 5) === 'video' && frame.containers[i].element) {
+							var el = $(frame.containers[i].element).children('video').get(0);
+							el.play();
+							if (el.readyState) {
+								el.currentTime = '0';
+							}
+						}
+						if(frame.containers[i].element && frame.containers[i].element.hammer)
+							frame.containers[i].element.on("click", onClick);
+					}
+					next();
 
-				$element.on('$destroy', function() {
-					$interval.cancel(timeoutId);
-				});
+					if (timer)
+						$timeout.cancel(timer);
+					
+					timer = $timeout(play, frame.duration);
+				}
 
-				timeoutId = $interval(function() {
-					updateTime(); // update DOM
-				}, 1000);
+				function next() {
+					if (current < frames.length-1)
+						current++;
+					else
+						current = 0;
+				}
 
-				updateTime();
+				function onClick(event) {
+					//var id = $(event.currentTarget).data('id');
+					// console.log('TODO: Banner.onClick', id);
+				}
 			}]
 		}
 }]);
