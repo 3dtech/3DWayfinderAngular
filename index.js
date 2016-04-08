@@ -1,7 +1,7 @@
 var wfangular = angular.module('wfangular', []);
 wfangular.factory('wfangular3d', ['$rootScope', function($rootScope) {
 	var wf = false;
-	
+
 	if(typeof Wayfinder3D !== "undefined")
 		wf = new Wayfinder3D();
 	else if(typeof Wayfinder2D !== "undefined")

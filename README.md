@@ -2,6 +2,10 @@
 Angular Service for 3D Wayfinder (now supports 2D maps also)
 
 ## Getting started
+
+### Install
+bower install --save 3dwayfinder-angular
+
 Please include the following JavaScript files into Your HTML file and inject wfangular into Your Angular app:
 
 ```javascript
@@ -13,7 +17,6 @@ Please include the following JavaScript files into Your HTML file and inject wfa
 <script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/Wayfinder2D.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
 <script type="text/javascript" src="index.js"></script>
-
 
 <script>
     var app = angular.module('basictest', ['wfangular']);
