@@ -36,3 +36,8 @@ Please include the following JavaScript files into Your HTML file and inject wfa
 * wf.floor.change - broadcasted when floor is changed. Arguments: Floor
 * wf.zoom.change - broadcasted when zoom is changed. Arguments: zoom {float}
 * wf.path.floor.change - broadcasted when path animation changes floor: Arguments: Object {current: Floor, next: Floor, destination: Floor}
+
+##Options
+Constant wfangular3dConfig takes the following arguments for changing the behavior:
+*	assetsLocation: 'http://static.3dwayfinder.com/shared/',
+*	apiLocation: 'http://api.3dwayfinder.com'
