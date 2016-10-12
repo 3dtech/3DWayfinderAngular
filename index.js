@@ -17,6 +17,10 @@ wfangular.factory('wfangular3d', ['$rootScope', function ($rootScope) {
             $rootScope.$broadcast('wf.poi.click', poi);
         };
 
+        wf.cbOnPathFinished = function (path) {
+			$rootScope.$broadcast('wf.path.finished', path);
+		};
+
         wf.cbOnLanguageChange = function (language) {
             $rootScope.$broadcast('wf.language.change', language);
         };
