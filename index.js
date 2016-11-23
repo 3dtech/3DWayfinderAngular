@@ -2,66 +2,19 @@ var wfangular = angular.module('wfangular', []);
 wfangular.factory('wfangular3d', ['$rootScope', function ($rootScope) {
     var wf = false;
 
-	if (typeof Wayfinder3D !== "undefined") {
-		wf = new Wayfinder3D();
-	} else if (typeof Wayfinder2D !== "undefined") {
-		wf = new Wayfinder2D();
-	}
-
-	if (!!wf) {
-        wf.cbOnDataLoaded = function () {
-            $rootScope.$broadcast('wf.data.loaded', []);
-        };
-
-        wf.cbOnPOIClick = function (poi) {
-            $rootScope.$broadcast('wf.poi.click', poi);
-        };
-
-        wf.cbOnPathFinished = function (path) {
-			$rootScope.$broadcast('wf.path.finished', path);
-		};
-
-        wf.cbOnLanguageChange = function (language) {
-            $rootScope.$broadcast('wf.language.change', language);
-        };
-
-        wf.cbOnFloorChange = function (floor) {
-            $rootScope.$broadcast('wf.floor.change', floor);
-        };
-
-        wf.cbOnZoomChange = function (zoom) {
-            $rootScope.$broadcast('wf.zoom.change', zoom);
-        };
-
-        wf.onBeforeFloorChange = function (currentFloor, nextFloor, destinationFloor) {
-            $rootScope.$broadcast('wf.path.floor.change', {
-                current: currentFloor,
-                next: nextFloor,
-                destination: destinationFloor
-            });
-        };
-
-        wf.cbOnTouch = function (type, value) {
-            $rootScope.$broadcast('wf.touch', {
-                type: type,
-                value: value
-            });
-        }
+    if (typeof Wayfinder3D !== "undefined") {
+        wf = new Wayfinder3DEx();
+    } else if (typeof Wayfinder2D !== "undefined") {
+        wf = new Wayfinder2D();
     }
 
-    return wf;
-}]);
-
-wfangular.factory('wfangular3dEx', ['$rootScope', function ($rootScope) {
-    var wf = false;
-
-	if (typeof Wayfinder3D !== "undefined") {
-		wf = new Wayfinder3DEx();
-	} 
-
-	if (!!wf) {
+    if (!!wf) {
         wf.cbOnDataLoaded = function () {
             $rootScope.$broadcast('wf.data.loaded', []);
+        };
+        
+        wf.cbOnMapReady = function () {
+            $rootScope.$broadcast('wf.map.ready', []);
         };
 
         wf.cbOnPOIClick = function (poi) {
@@ -69,8 +22,8 @@ wfangular.factory('wfangular3dEx', ['$rootScope', function ($rootScope) {
         };
 
         wf.cbOnPathFinished = function (path) {
-			$rootScope.$broadcast('wf.path.finished', path);
-		};
+            $rootScope.$broadcast('wf.path.finished', path);
+        };
 
         wf.cbOnLanguageChange = function (language) {
             $rootScope.$broadcast('wf.language.change', language);
@@ -106,14 +59,14 @@ wfangular.factory('wfangular3dEx', ['$rootScope', function ($rootScope) {
 wfangular.filter('wfCurrentLanguage', ['wfangular3d', function (wayfinder) {
     return function (input) {
         if (input && typeof input === "object") {
-			if (input[wayfinder.getLanguage()]) {
-				return input[wayfinder.getLanguage()];
-			} else if (input["translations"][wayfinder.getLanguage()]) {
-				return input["translations"][wayfinder.getLanguage()];
-			} else {
-				return input;
-			}
-		} else {
+            if (input[wayfinder.getLanguage()]) {
+                return input[wayfinder.getLanguage()];
+            } else if (input["translations"][wayfinder.getLanguage()]) {
+                return input["translations"][wayfinder.getLanguage()];
+            } else {
+                return input;
+            }
+        } else {
             return input;
         }
     };
@@ -159,11 +112,11 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular3d', '$timeout', functio
             function setup() {
                 var tpl = '<div style="position: absolute; background-size: cover; background-position: 50% 50%; background-repeat: no-repeat; left: {1}%; top: {2}%; width: {3}%; height: {4}%; {5}" data-id="{0}"></div>';
 
-				if (wayfinder.advertisements["template-" + template] && wayfinder.advertisements["template-" + template][id]) {
-					frames = wayfinder.advertisements["template-" + template][id];
-				}
+                if (wayfinder.advertisements["template-" + template] && wayfinder.advertisements["template-" + template][id]) {
+                    frames = wayfinder.advertisements["template-" + template][id];
+                }
 
-				for (var i = 0; i < frames.length; i++) {
+                for (var i = 0; i < frames.length; i++) {
                     var frame = frames[i];
                     frame.element = $('<div style="position: relative; width: 100%; height: 100%;">');
                     for (var j = 0; j < frame.containers.length; j++) {
@@ -192,10 +145,10 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular3d', '$timeout', functio
             }
 
             function play() {
-				if (current >= frames.length) {
-					return;
-				}
-				var frame = frames[current];
+                if (current >= frames.length) {
+                    return;
+                }
+                var frame = frames[current];
                 frame.element.show();
                 $element.empty().append(frame.element);
                 for (var i = 0; i < frame.containers.length; i++) {
@@ -206,27 +159,27 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular3d', '$timeout', functio
                             el.currentTime = '0';
                         }
                     }
-					if (frame.containers[i].element && frame.containers[i].element.hammer) {
-						frame.containers[i].element.on("click", onClick);
-					}
-				}
+                    if (frame.containers[i].element && frame.containers[i].element.hammer) {
+                        frame.containers[i].element.on("click", onClick);
+                    }
+                }
                 next();
 
-				if (timer) {
-					$timeout.cancel(timer);
-				}
+                if (timer) {
+                    $timeout.cancel(timer);
+                }
 
-				timer = $timeout(play, frame.duration);
+                timer = $timeout(play, frame.duration);
             }
 
             function next() {
-				if (current < frames.length - 1) {
-					current++;
-				} else
-					current = 0;
-			}
+                if (current < frames.length - 1) {
+                    current++;
+                } else
+                    current = 0;
+            }
 
-			function onClick(event) {
+            function onClick(event) {
                 //var id = $(event.currentTarget).data('id');
                 // console.log('TODO: Banner.onClick', id);
             }
