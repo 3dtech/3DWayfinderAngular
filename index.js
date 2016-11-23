@@ -1,5 +1,5 @@
 var wfangular = angular.module('wfangular', []);
-wfangular.factory('wfangular3d', ['$rootScope', function ($rootScope) {
+wfangular.factory('wfangular', ['$rootScope', function ($rootScope) {
     var wf = false;
 
     if (typeof Wayfinder3D !== "undefined") {
