@@ -56,7 +56,7 @@ wfangular.factory('wfangular', ['$rootScope', function ($rootScope) {
     return wf;
 }]);
 
-wfangular.filter('wfCurrentLanguage', ['wfangular3d', function (wayfinder) {
+wfangular.filter('wfCurrentLanguage', ['wfangular', function (wayfinder) {
     return function (input) {
         if (input && typeof input === "object") {
             if (input[wayfinder.getLanguage()]) {
@@ -72,7 +72,7 @@ wfangular.filter('wfCurrentLanguage', ['wfangular3d', function (wayfinder) {
     };
 }]);
 
-wfangular.directive('wfBanner', ['$interval', 'wfangular3d', '$timeout', function ($interval, wayfinder, $timeout) {
+wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function ($interval, wayfinder, $timeout) {
     return {
         restrict: 'EA',
         scope: {},
