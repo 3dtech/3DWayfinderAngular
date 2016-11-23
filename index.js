@@ -52,6 +52,57 @@ wfangular.factory('wfangular3d', ['$rootScope', function ($rootScope) {
     return wf;
 }]);
 
+wfangular.factory('wfangular3dEx', ['$rootScope', function ($rootScope) {
+    var wf = false;
+
+	if (typeof Wayfinder3D !== "undefined") {
+		wf = new Wayfinder3DEx();
+	} 
+
+	if (!!wf) {
+        wf.cbOnDataLoaded = function () {
+            $rootScope.$broadcast('wf.data.loaded', []);
+        };
+
+        wf.cbOnPOIClick = function (poi) {
+            $rootScope.$broadcast('wf.poi.click', poi);
+        };
+
+        wf.cbOnPathFinished = function (path) {
+			$rootScope.$broadcast('wf.path.finished', path);
+		};
+
+        wf.cbOnLanguageChange = function (language) {
+            $rootScope.$broadcast('wf.language.change', language);
+        };
+
+        wf.cbOnFloorChange = function (floor) {
+            $rootScope.$broadcast('wf.floor.change', floor);
+        };
+
+        wf.cbOnZoomChange = function (zoom) {
+            $rootScope.$broadcast('wf.zoom.change', zoom);
+        };
+
+        wf.onBeforeFloorChange = function (currentFloor, nextFloor, destinationFloor) {
+            $rootScope.$broadcast('wf.path.floor.change', {
+                current: currentFloor,
+                next: nextFloor,
+                destination: destinationFloor
+            });
+        };
+
+        wf.cbOnTouch = function (type, value) {
+            $rootScope.$broadcast('wf.touch', {
+                type: type,
+                value: value
+            });
+        }
+    }
+
+    return wf;
+}]);
+
 wfangular.filter('wfCurrentLanguage', ['wfangular3d', function (wayfinder) {
     return function (input) {
         if (input && typeof input === "object") {
