@@ -36,7 +36,7 @@ console.log("config", config);
 			$rootScope.$broadcast('wf.zoom.change', zoom);
 		}
 
-		wf.onBeforeFloorChange = function(currentFloor, nextFloor, destinationFloor) {
+		wf.cbOnBeforeFloorChange = function(currentFloor, nextFloor, destinationFloor) {
 			$rootScope.$broadcast('wf.path.floor.change', {
 				current: currentFloor,
 				next: nextFloor,
