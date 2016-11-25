@@ -10,8 +10,8 @@ Please include the following JavaScript files into Your HTML file and inject wfa
 
 ```javascript
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/frak-stable.min.js"></script>
 <!-- FOR 3D Map add the line below -->
+<script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/frak-stable.min.js"></script>
 <script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/Wayfinder3D.min.js"></script>
 <!-- FOR 2D Map add the line below -->
 <script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/Wayfinder2D.min.js"></script>
@@ -20,11 +20,10 @@ Please include the following JavaScript files into Your HTML file and inject wfa
 
 <script>
     var app = angular.module('basictest', ['wfangular']);
-    // ------ For 2D engine use the line below instead -------
-    // app.run(['wfangualr2d', function(wayfinder) {
-    app.run(['wfangular3d', function(wayfinder) {
-      WayfinderAPI.LOCATION = "http://api.3dwayfinder.com/";
-      wayfinder.options.assetsLocation = 'http://static.3dwayfinder.com/shared/';
+    app.config(['wfangularConfig', function(wayfinderConfig){
+    	wayfinderConfig.mapType = '2d';
+    }])
+    app.run(['wfangular', function(wayfinder) {
       wayfinder.open();
     }]);
 </script>
@@ -38,6 +37,7 @@ Please include the following JavaScript files into Your HTML file and inject wfa
 * wf.path.floor.change - broadcasted when path animation changes floor: Arguments: Object {current: Floor, next: Floor, destination: Floor}
 
 ##Options
-Constant wfangular3dConfig takes the following arguments for changing the behavior:
+Constant wfangularConfig takes the following arguments for changing the behavior:
 *	assetsLocation: 'http://static.3dwayfinder.com/shared/',
 *	apiLocation: 'http://api.3dwayfinder.com'
+*	mapType: '3d'//2d

@@ -1,16 +1,17 @@
 var wfangular = angular.module('wfangular', []);
 
-wfangular.constant('wfangular3dConfig', {
+wfangular.constant('wfangularConfig', {
 	assetsLocation: 'http://static.3dwayfinder.com/shared/',
-	apiLocation: 'http://api.3dwayfinder.com'
+	apiLocation: 'http://api.3dwayfinder.com',
+	mapType: '3d'
 });
-wfangular.factory('wfangular3d', ['$rootScope', 'wfangular3dConfig', function($rootScope, config) {
+wfangular.factory('wfangular', ['$rootScope', 'wfangularConfig', function($rootScope, config) {
 	var wf = false;
 	WayfinderAPI.LOCATION = config.apiLocation;
 
-	if(typeof Wayfinder3D !== "undefined")
+	if(config.mapType == "3d")
 		wf = new Wayfinder3D();
-	else if(typeof Wayfinder2D !== "undefined")
+	else if(config.mapType !== "2d")
 		wf = new Wayfinder2D();
 
 	wf.options.assetsLocation = config.assetsLocation;
