@@ -76,7 +76,7 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function 
     return {
         restrict: 'EA',
         scope: {},
-        controller: ['$scope', '$element', '$attrs', '$timeout', function ($scope, $element, $attrs, $timeout) {
+        controller: ['$scope', '$element', '$attrs', '$timeout','$document', function ($scope, $element, $attrs, $timeout, $document) {
             var timeoutId;
             var frames = [];
             var current = 0;
@@ -86,13 +86,13 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function 
 
             //watch id attribute for the banner placement
             $scope.$watch(function () {
-                              return $element.attr('id');
-                          },
-                          function () {
-                              if (!!$attrs.id && $attrs.id !== "") {
-                                  id = $attrs.id;
-                              }
-                          }
+                      return $element.attr('id');
+                  },
+                  function () {
+                      if (!!$attrs.id && $attrs.id !== "") {
+                          id = $attrs.id;
+                      }
+                  }
             );
 
             $scope.$watch(function () {
@@ -115,6 +115,9 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function 
                 if (wayfinder.advertisements["template-" + template] && wayfinder.advertisements["template-" + template][id]) {
                     frames = wayfinder.advertisements["template-" + template][id];
                 }
+
+                if(frames && frames.length > 0)
+                    $document.find("body").addClass("banner-"+id);
 
                 for (var i = 0; i < frames.length; i++) {
                     var frame = frames[i];
