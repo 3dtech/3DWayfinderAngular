@@ -1,63 +1,63 @@
 var wfangular = angular.module('wfangular', []);
 
 wfangular.constant('wfangularConfig', {
-	assetsLocation: 'http://static.3dwayfinder.com/shared/',
-	apiLocation: 'http://api.3dwayfinder.com',
-	mapType: '3d'
+    assetsLocation: 'http://static.3dwayfinder.com/shared/',
+    apiLocation: 'http://api.3dwayfinder.com',
+    mapType: '3d'
 });
 wfangular.factory('wfangular', ['$rootScope', 'wfangularConfig', function($rootScope, config) {
-	var wf = false;
-	WayfinderAPI.LOCATION = config.apiLocation;
+    var wf = false;
+    WayfinderAPI.LOCATION = config.apiLocation;
 
-	if(config.mapType == "3d")
-		wf = new Wayfinder3D();
-	else if(config.mapType !== "2d")
-		wf = new Wayfinder2D();
+    if (config.mapType == "3d")
+        wf = new Wayfinder3D();
+    else if (config.mapType !== "2d")
+        wf = new Wayfinder2D();
 
-	wf.options.assetsLocation = config.assetsLocation;
+    wf.options.assetsLocation = config.assetsLocation;
 
-	if(wf){
-		wf.cbOnDataLoaded = function() {
-			$rootScope.$broadcast('wf.data.loaded', []);
-		}
+    if (wf) {
+        wf.cbOnDataLoaded = function() {
+            $rootScope.$broadcast('wf.data.loaded', []);
+        }
 
-		wf.cbOnPOIClick = function(poi) {
-			$rootScope.$broadcast('wf.poi.click', poi);
-		}
+        wf.cbOnPOIClick = function(poi) {
+            $rootScope.$broadcast('wf.poi.click', poi);
+        }
 
-		wf.cbOnLanguageChange = function(language) {
-			$rootScope.$broadcast('wf.language.change', language);
-		}
+        wf.cbOnLanguageChange = function(language) {
+            $rootScope.$broadcast('wf.language.change', language);
+        }
 
-		wf.cbOnFloorChange = function(floor) {
-			$rootScope.$broadcast('wf.floor.change', floor);
-		}
+        wf.cbOnFloorChange = function(floor) {
+            $rootScope.$broadcast('wf.floor.change', floor);
+        }
 
-		wf.cbOnZoomChange = function(zoom) {
-			$rootScope.$broadcast('wf.zoom.change', zoom);
-		}
+        wf.cbOnZoomChange = function(zoom) {
+            $rootScope.$broadcast('wf.zoom.change', zoom);
+        }
 
-		wf.cbOnBeforeFloorChange = function(currentFloor, nextFloor, destinationFloor) {
-			$rootScope.$broadcast('wf.path.floor.change', {
-				current: currentFloor,
-				next: nextFloor,
-				destination: destinationFloor
-			});
-		}
+        wf.cbOnBeforeFloorChange = function(currentFloor, nextFloor, destinationFloor) {
+            $rootScope.$broadcast('wf.path.floor.change', {
+                current: currentFloor,
+                next: nextFloor,
+                destination: destinationFloor
+            });
+        }
 
-		wf.cbOnTouch = function(type, value) {
-			$rootScope.$broadcast('wf.touch', {
-				type: type,
-				value: value
-			});
-		}
-	}
+        wf.cbOnTouch = function(type, value) {
+            $rootScope.$broadcast('wf.touch', {
+                type: type,
+                value: value
+            });
+        }
+    }
 
-	return wf;
+    return wf;
 }]);
 
-wfangular.filter('wfCurrentLanguage', ['wfangular', function (wayfinder) {
-    return function (input) {
+wfangular.filter('wfCurrentLanguage', ['wfangular', function(wayfinder) {
+    return function(input) {
         if (input && typeof input === "object") {
             if (input[wayfinder.getLanguage()]) {
                 return input[wayfinder.getLanguage()];
@@ -72,11 +72,11 @@ wfangular.filter('wfCurrentLanguage', ['wfangular', function (wayfinder) {
     };
 }]);
 
-wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function ($interval, wayfinder, $timeout) {
+wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function($interval, wayfinder, $timeout) {
     return {
         restrict: 'EA',
         scope: {},
-        controller: ['$scope', '$element', '$attrs', '$timeout','$document', function ($scope, $element, $attrs, $timeout, $document) {
+        controller: ['$scope', '$element', '$attrs', '$timeout', '$document', function($scope, $element, $attrs, $timeout, $document) {
             var timeoutId;
             var frames = [];
             var current = 0;
@@ -85,27 +85,27 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function 
             var template = "default";
 
             //watch id attribute for the banner placement
-            $scope.$watch(function () {
-                      return $element.attr('id');
-                  },
-                  function () {
-                      if (!!$attrs.id && $attrs.id !== "") {
-                          id = $attrs.id;
-                      }
-                  }
+            $scope.$watch(function() {
+                    return $element.attr('id');
+                },
+                function() {
+                    if (!!$attrs.id && $attrs.id !== "") {
+                        id = $attrs.id;
+                    }
+                }
             );
 
-            $scope.$watch(function () {
-                              return $element.attr('template');
-                          },
-                          function () {
-                              if (!!$attrs.template && $attrs.template !== "") {
-                                  template = $attrs.template;
-                              }
-                          }
+            $scope.$watch(function() {
+                    return $element.attr('template');
+                },
+                function() {
+                    if (!!$attrs.template && $attrs.template !== "") {
+                        template = $attrs.template;
+                    }
+                }
             );
 
-            $scope.$on('wf.data.loaded', function (event, data) {
+            $scope.$on('wf.data.loaded', function(event, data) {
                 setup();
             });
 
@@ -116,8 +116,8 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function 
                     frames = wayfinder.advertisements["template-" + template][id];
                 }
 
-                if(frames && frames.length > 0)
-                    $document.find("body").addClass("banner-"+id);
+                if (frames && frames.length > 0)
+                    $document.find("body").addClass("banner-" + id);
 
                 for (var i = 0; i < frames.length; i++) {
                     var frame = frames[i];
