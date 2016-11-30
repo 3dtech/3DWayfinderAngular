@@ -6,58 +6,59 @@ wfangular.constant('wfangularConfig', {
     mapType: '3d'
 });
 wfangular.factory('wfangular', [
-    '$rootScope', 
-    'wfangularConfig', 
+    '$rootScope',
+    'wfangularConfig',
     function($rootScope, config) {
-    var wf = false;
-    WayfinderAPI.LOCATION = config.apiLocation;
+        var wf = false;
+        WayfinderAPI.LOCATION = config.apiLocation;
 
-    if (config.mapType == "3d")
-        wf = new Wayfinder3D();
-    else if (config.mapType !== "2d")
-        wf = new Wayfinder2D();
+        if (config.mapType == "3d")
+            wf = new Wayfinder3D();
+        else if (config.mapType !== "2d")
+            wf = new Wayfinder2D();
 
-    wf.options.assetsLocation = config.assetsLocation;
+        wf.options.assetsLocation = config.assetsLocation;
 
-    if (wf) {
-        wf.cbOnDataLoaded = function() {
-            $rootScope.$broadcast('wf.data.loaded', []);
+        if (wf) {
+            wf.cbOnDataLoaded = function() {
+                $rootScope.$broadcast('wf.data.loaded', []);
+            }
+
+            wf.cbOnPOIClick = function(poi) {
+                $rootScope.$broadcast('wf.poi.click', poi);
+            }
+
+            wf.cbOnLanguageChange = function(language) {
+                $rootScope.$broadcast('wf.language.change', language);
+            }
+
+            wf.cbOnFloorChange = function(floor) {
+                $rootScope.$broadcast('wf.floor.change', floor);
+            }
+
+            wf.cbOnZoomChange = function(zoom) {
+                $rootScope.$broadcast('wf.zoom.change', zoom);
+            }
+
+            wf.cbOnBeforeFloorChange = function(currentFloor, nextFloor, destinationFloor) {
+                $rootScope.$broadcast('wf.path.floor.change', {
+                    current: currentFloor,
+                    next: nextFloor,
+                    destination: destinationFloor
+                });
+            }
+
+            wf.cbOnTouch = function(type, value) {
+                $rootScope.$broadcast('wf.touch', {
+                    type: type,
+                    value: value
+                });
+            }
         }
 
-        wf.cbOnPOIClick = function(poi) {
-            $rootScope.$broadcast('wf.poi.click', poi);
-        }
-
-        wf.cbOnLanguageChange = function(language) {
-            $rootScope.$broadcast('wf.language.change', language);
-        }
-
-        wf.cbOnFloorChange = function(floor) {
-            $rootScope.$broadcast('wf.floor.change', floor);
-        }
-
-        wf.cbOnZoomChange = function(zoom) {
-            $rootScope.$broadcast('wf.zoom.change', zoom);
-        }
-
-        wf.cbOnBeforeFloorChange = function(currentFloor, nextFloor, destinationFloor) {
-            $rootScope.$broadcast('wf.path.floor.change', {
-                current: currentFloor,
-                next: nextFloor,
-                destination: destinationFloor
-            });
-        }
-
-        wf.cbOnTouch = function(type, value) {
-            $rootScope.$broadcast('wf.touch', {
-                type: type,
-                value: value
-            });
-        }
+        return wf;
     }
-
-    return wf;
-}]);
+]);
 
 wfangular.filter('wfCurrentLanguage', ['wfangular', function(wayfinder) {
     return function(input) {
