@@ -5,7 +5,10 @@ wfangular.constant('wfangularConfig', {
     apiLocation: 'http://api.3dwayfinder.com',
     mapType: '3d'
 });
-wfangular.factory('wfangular', ['$rootScope', 'wfangularConfig', function($rootScope, config) {
+wfangular.factory('wfangular', [
+    '$rootScope', 
+    'wfangularConfig', 
+    function($rootScope, config) {
     var wf = false;
     WayfinderAPI.LOCATION = config.apiLocation;
 
