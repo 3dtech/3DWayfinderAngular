@@ -13,7 +13,7 @@ wfangular.factory('wfangular', [
         WayfinderAPI.LOCATION = config.apiLocation;
 
         if (config.mapType == "3d")
-            wf = new Wayfinder3D();
+            wf = new Wayfinder3DEx();
         else if (config.mapType !== "2d")
             wf = new Wayfinder2D();
 
@@ -22,23 +22,23 @@ wfangular.factory('wfangular', [
         if (wf) {
             wf.cbOnDataLoaded = function() {
                 $rootScope.$broadcast('wf.data.loaded', []);
-            }
+            };
 
             wf.cbOnPOIClick = function(poi) {
                 $rootScope.$broadcast('wf.poi.click', poi);
-            }
+            };
 
             wf.cbOnLanguageChange = function(language) {
                 $rootScope.$broadcast('wf.language.change', language);
-            }
+            };
 
             wf.cbOnFloorChange = function(floor) {
                 $rootScope.$broadcast('wf.floor.change', floor);
-            }
+            };
 
             wf.cbOnZoomChange = function(zoom) {
                 $rootScope.$broadcast('wf.zoom.change', zoom);
-            }
+            };
 
             wf.cbOnBeforeFloorChange = function(currentFloor, nextFloor, destinationFloor) {
                 $rootScope.$broadcast('wf.path.floor.change', {
@@ -46,14 +46,22 @@ wfangular.factory('wfangular', [
                     next: nextFloor,
                     destination: destinationFloor
                 });
-            }
+            };
 
             wf.cbOnTouch = function(type, value) {
                 $rootScope.$broadcast('wf.touch', {
                     type: type,
                     value: value
                 });
-            }
+            };
+
+            wf.cbOnMapReady = function() {
+                $rootScope.$broadcast('wf.map.ready', []);
+            };
+
+            wf.cbOnPathFinished = function(path) {
+                $rootScope.$broadcast('wf.path.finished', path);
+            };
         }
 
         return wf;
