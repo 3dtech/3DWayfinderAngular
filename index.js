@@ -1,8 +1,8 @@
 var wfangular = angular.module('wfangular', []);
 
 wfangular.constant('wfangularConfig', {
-    assetsLocation: 'http://static.3dwayfinder.com/shared/',
-    apiLocation: 'http://api.3dwayfinder.com',
+    assetsLocation: '//static.3dwayfinder.com/shared/',
+    apiLocation: '//api.3dwayfinder.com',
     mapType: '3d'
 });
 wfangular.factory('wfangular', [
