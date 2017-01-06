@@ -212,13 +212,14 @@ wfangular.directive('wfFloorsButtons', ['wfangular', function(wayfinder) {
     return {
         restrict: 'AE',
         template: '<div class="{{buttonClass}}"' +
-            ' ng-class="{\'active\':floor.active}"' +
+            ' ng-class="{\'{{activeClass}}\': floor.getActive()}"' +
             ' ng-repeat="floor in data.floors"' +
             ' ng-click="onFakeClick(floor)">{{floor.getNames() | wfCurrentLanguage}}</div>',
         scope: {
             onFakeClick: '&',
             onClick: '&?',
-            buttonClass: '@'
+            buttonClass: '@',
+            activeClass: '@'
         },
         controller: function($scope) {
             $scope.data = {
@@ -227,6 +228,7 @@ wfangular.directive('wfFloorsButtons', ['wfangular', function(wayfinder) {
 
             $scope.$on('wf.data.loaded', function(event, data) {
                 $scope.data.floors = wayfinder.building.getSortedFloors();
+                console.log("wayfinder.building.getSortedFloors();", wayfinder.building.getSortedFloors())
             });
 
             $scope.onFakeClick = function(sa) {
