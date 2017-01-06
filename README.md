@@ -4,7 +4,9 @@ Angular Service for 3D Wayfinder (now supports 2D maps also)
 ## Getting started
 
 ### Install
+```bash 
 bower install --save 3dwayfinder-angular
+```
 
 Please include the following JavaScript files into Your HTML file and inject wfangular into Your Angular app:
 
@@ -38,7 +40,10 @@ Please include the following JavaScript files into Your HTML file and inject wfa
 
 ## Directives
 * wf-banner - displays a banner, ex. id="advertisements" template="default"
-* wf-floor-buttons - displays floor buttons, on-click function to react, can give additional parameters for the button group via group-class and for the buttons via button-class
+* wf-floor-buttons - displays floor buttons, on-click function to react, can give additional parameters for the button group via group-class and for the buttons via button-class, see example below
+```javascript
+<wf-floors-buttons group-class="btn-group floors-buttons" button-class="btn floor"></wf-floors-buttons>
+```
 
 ##Options
 Constant wfangularConfig takes the following arguments for changing the behavior:
