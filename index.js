@@ -211,15 +211,17 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function(
 wfangular.directive('wfFloorsButtons', ['wfangular', function(wayfinder) {
 	return {
 		restrict: 'AE',
-		template: '<div class="button-group expanded">' +
-			'<div class="button"' +
+		template: '<div class="{{groupClass}}">' +
+			'<div class="{{buttonClass}}"' +
 			' ng-class="{\'active\':floor.active}"' +
 			' ng-repeat="floor in data.floors"' +
 			' ng-click="onFakeClick(floor)">{{floor.getNames() | wfCurrentLanguage}}</div>' +
 			'</div>',
 		scope: {
 			onFakeClick: '&',
-			onClick: '&'
+			onClick: '&',
+			groupClass: '@',
+			buttonClass: '@'
 		},
 		controller: function($scope) {
 			$scope.data = {
