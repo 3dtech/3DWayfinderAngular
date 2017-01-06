@@ -201,3 +201,32 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function(
         }]
     }
 }]);
+
+wfangular.directive('wfFloorsButtons', ['wfangular', function(wayfinder) {
+    return {
+        restrict: 'AE',
+        template: '<div class="button-group expanded">' +
+            '<div class="button"' +
+            ' ng-class="{\'active\':floor.active}"' +
+            ' ng-repeat="floor in data.floors"' +
+            ' ng-click="onFakeClick(floor)">{{floor.getNames() | wfCurrentLanguage}}</div>' +
+            '</div>',
+        scope: {
+            onFakeClick: '&',
+            onClick: '&'
+        },
+        controller: function($scope) {
+            $scope.data = {
+                floors: []
+            };
+
+            $scope.$on('wf.data.loaded', function(event, data) {
+               $scope.data.floors = wayfinder.building.getSortedFloors();
+            });
+
+            $scope.onFakeClick = function(sa) {
+                $scope.onClick({ floor: sa });
+            }
+        }
+    }
+}]);

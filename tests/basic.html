@@ -17,31 +17,37 @@
 	}
 </style>
 
-<body ng-app="basictest">
-	<canvas id="map" width="400" height="300" ng-controller="BasicController"></canvas>
+<body ng-app="basictest" ng-controller="BasicController">
+	<canvas id="map" width="400" height="300" ></canvas>
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 	<script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/frak-stable.min.js"></script>
-	<script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/Wayfinder2D.min.js"></script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+	<script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/Wayfinder3D.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	<script type="text/javascript" src="../index.js"></script>
+	
+	<div wf-floors-buttons on-click="floorClick(floor)"></div>
+	<div id="advertisements" template="default" wf-banner class="banner"></div>
+
 	<script>
 		var app = angular.module('basictest', ['wfangular']);
-		app.run(['wfangular3d', function(wayfinder) {
+		app.run(['wfangular', function(wayfinder) {
 			WayfinderAPI.LOCATION = "http://api.3dwayfinder.com/";
 			wayfinder.options.assetsLocation = 'http://static.3dwayfinder.com/shared/';
-			wayfinder.open("d191b9a3bd42bfa3959291cd61860b39");
+			wayfinder.open("demo");
 
 		}]);
 		
 		angular.module('basictest')
-			.controller('BasicController', ['$scope', 'wfangular3d', function($scope, wfangular3d) {
-				console.log(wfangular3d.map);
+			.controller('BasicController', ['$scope', 'wfangular', function($scope, wayfinder) {
 				$scope.$on('wf.data.loaded', function(){
 					console.log("Loaded");
 				});
+
+				$scope.floorClick = function(floor){
+					alert(floor.getNames()[wayfinder.getLanguage()]);
+				}
 			}]);
 	</script>
-
-	<div id="advertisements" template="default" wf-banner class="banner"></div>
+	
 </body>
 </html>
