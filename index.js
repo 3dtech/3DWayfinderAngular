@@ -209,30 +209,72 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function(
 }]);
 
 wfangular.directive('wfFloorsButtons', ['wfangular', function(wayfinder) {
-    return {
-        restrict: 'AE',
-        template: '<div class="button-group expanded">' +
-            '<div class="button"' +
-            ' ng-class="{\'active\':floor.active}"' +
-            ' ng-repeat="floor in data.floors"' +
-            ' ng-click="onFakeClick(floor)">{{floor.getNames() | wfCurrentLanguage}}</div>' +
-            '</div>',
-        scope: {
-            onFakeClick: '&',
-            onClick: '&'
-        },
-        controller: function($scope) {
-            $scope.data = {
-                floors: []
-            };
+	return {
+		restrict: 'AE',
+		template: '<div class="button-group expanded">' +
+			'<div class="button"' +
+			' ng-class="{\'active\':floor.active}"' +
+			' ng-repeat="floor in data.floors"' +
+			' ng-click="onFakeClick(floor)">{{floor.getNames() | wfCurrentLanguage}}</div>' +
+			'</div>',
+		scope: {
+			onFakeClick: '&',
+			onClick: '&'
+		},
+		controller: function($scope) {
+			$scope.data = {
+				floors: []
+			};
 
-            $scope.$on('wf.data.loaded', function(event, data) {
-               $scope.data.floors = wayfinder.building.getSortedFloors();
-            });
+			$scope.$on('wf.data.loaded', function(event, data) {
+				$scope.data.floors = wayfinder.building.getSortedFloors();
+			});
 
-            $scope.onFakeClick = function(sa) {
-                $scope.onClick({ floor: sa });
-            }
-        }
-    }
+			$scope.onFakeClick = function(sa) {
+				$scope.onClick({
+					floor: sa
+				});
+			}
+		}
+	}
 }]);
+
+wfangular.directive('resize', function($window) {
+	return {
+		restrict: 'AEC',
+		scope: {
+			cbResize: '&cbResize'
+		},
+		link: function(scope, element) {
+
+			var w = element[0];
+			scope.getWindowDimensions = function() {
+				return {
+					'h': w.clientHeight,
+					'w': w.clientWidth
+				};
+			};
+
+			scope.$watch(scope.getWindowDimensions, function(newValue) {
+				scope.windowHeight = newValue.h;
+				scope.windowWidth = newValue.w;
+
+				scope.style = function() {
+					return {
+						'height': (newValue.h - 10) +
+							'px',
+						'width': (newValue.w - 10) +
+							'px'
+					};
+				};
+
+			}, true);
+
+			angular.element($window).bind('resize', function() {
+				scope.$apply(function() {
+					scope.cbResize();
+				});
+			});
+		}
+	}
+});
