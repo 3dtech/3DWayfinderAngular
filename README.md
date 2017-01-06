@@ -38,7 +38,7 @@ Please include the following JavaScript files into Your HTML file and inject wfa
 
 ## Directives
 * wf-banner - displays a banner, ex. id="advertisements" template="default"
-* wf-floor-buttons - displays floor buttons, on-click function to react
+* wf-floor-buttons - displays floor buttons, on-click function to react, can give additional parameters for the button group via group-class and for the buttons via button-class
 
 ##Options
 Constant wfangularConfig takes the following arguments for changing the behavior:
