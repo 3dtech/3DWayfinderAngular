@@ -209,36 +209,39 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function(
 }]);
 
 wfangular.directive('wfFloorsButtons', ['wfangular', function(wayfinder) {
-	return {
-		restrict: 'AE',
-		template: '<div class="{{groupClass}}">' +
-			'<div class="{{buttonClass}}"' +
-			' ng-class="{\'active\':floor.active}"' +
-			' ng-repeat="floor in data.floors"' +
-			' ng-click="onFakeClick(floor)">{{floor.getNames() | wfCurrentLanguage}}</div>' +
-			'</div>',
-		scope: {
-			onFakeClick: '&',
-			onClick: '&',
-			groupClass: '@',
-			buttonClass: '@'
-		},
-		controller: function($scope) {
-			$scope.data = {
-				floors: []
-			};
+    return {
+        restrict: 'AE',
+        template: '<div class="{{buttonClass}}"' +
+            ' ng-class="{\'active\':floor.active}"' +
+            ' ng-repeat="floor in data.floors"' +
+            ' ng-click="onFakeClick(floor)">{{floor.getNames() | wfCurrentLanguage}}</div>',
+        scope: {
+            onFakeClick: '&',
+            onClick: '&?',
+            buttonClass: '@'
+        },
+        controller: function($scope) {
+            $scope.data = {
+                floors: []
+            };
 
-			$scope.$on('wf.data.loaded', function(event, data) {
-				$scope.data.floors = wayfinder.building.getSortedFloors();
-			});
+            $scope.$on('wf.data.loaded', function(event, data) {
+                $scope.data.floors = wayfinder.building.getSortedFloors();
+            });
 
-			$scope.onFakeClick = function(sa) {
-				$scope.onClick({
-					floor: sa
-				});
-			}
-		}
-	}
+            $scope.onFakeClick = function(sa) {
+                if(typeof $scope.onClick === 'function'){
+                    $scope.onClick({
+                        floor: sa
+                    });
+                }
+                else {
+                    console.log("else", sa);
+                    wayfinder.showFloor(sa);
+                }
+            }
+        }
+    }
 }]);
 
 wfangular.directive('resize', function($window) {
