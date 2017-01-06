@@ -42,7 +42,7 @@ Please include the following JavaScript files into Your HTML file and inject wfa
 * wf-banner - displays a banner, ex. id="advertisements" template="default"
 * wf-floor-buttons - displays floor buttons, on-click function to react, can give additional parameters for the button group via group-class and for the buttons via button-class, see example below
 ```javascript
-<wf-floors-buttons group-class="btn-group floors-buttons" button-class="btn floor"></wf-floors-buttons>
+<wf-floors-buttons group-class="btn-group floors-buttons" active-class="btn btn-positive floor"></wf-floors-buttons>
 ```
 
 ##Options
