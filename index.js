@@ -76,10 +76,10 @@ wfangular.filter('wfCurrentLanguage', ['wfangular', function(wayfinder) {
             } else if (input["translations"][wayfinder.getLanguage()]) {
                 return input["translations"][wayfinder.getLanguage()];
             } else {
-                return input;
+                return "";
             }
         } else {
-            return input;
+            return "";
         }
     };
 }]);
