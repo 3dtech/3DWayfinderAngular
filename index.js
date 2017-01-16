@@ -16,7 +16,7 @@ wfangular.factory('wfangular', [
 
 		if (config.mapType == "3d")
 			wf = new Wayfinder3D();
-		else if (config.mapType !== "2d")
+		else if (config.mapType == "2d")
 			wf = new Wayfinder2D();
 
 		wf.options.assetsLocation = config.assetsLocation;
@@ -243,7 +243,7 @@ wfangular.directive('wfFloorsButtons', ['wfangular', function(wayfinder) {
     }
 }]);
 
-wfangular.directive('resize', function($window) {
+wfangular.directive('wfResize', function($window) {
 	return {
 		restrict: 'AEC',
 		scope: {
