@@ -14,12 +14,13 @@ wfangular.factory('wfangular', [
 		var wf = false;
 		WayfinderAPI.LOCATION = config.apiLocation;
 
-		if (config.mapType == "3d")
+		if (config.mapType == "3d") {
 			wf = new Wayfinder3D();
+			wf.options.assetsLocation = config.assetsLocation;
+		}
 		else if (config.mapType == "2d")
 			wf = new Wayfinder2D();
 
-		wf.options.assetsLocation = config.assetsLocation;
 
 		if (wf) {
 			wf.cbOnDataLoaded = function() {
