@@ -76,7 +76,7 @@ wfangular.filter('wfCurrentLanguage', ['wfangular', function(wayfinder) {
         if (input && typeof input === "object") {
             if (input[wayfinder.getLanguage()]) {
                 return input[wayfinder.getLanguage()];
-            } else if (input["translations"][wayfinder.getLanguage()]) {
+            } else if (input["translations"] && input["translations"][wayfinder.getLanguage()]) {
                 return input["translations"][wayfinder.getLanguage()];
             } else {
                 return "";
