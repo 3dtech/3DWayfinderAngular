@@ -87,6 +87,55 @@ wfangular.filter('wfCurrentLanguage', ['wfangular', function(wayfinder) {
     };
 }]);
 
+wfangular.filter('wfPOIsByGroupObj', function () {
+	return function (pois, obj) {
+		var filtered = [];
+		if (obj) {
+			angular.forEach(pois, function (item) {
+				if (item.groups && item.groups.indexOf(obj) > -1) {
+					filtered.push(item);
+				}
+			});
+		} else {
+			filtered = pois;
+		}
+		return filtered;
+	}
+});
+wfangular.filter('wfGroupsByParentGroupId',function () {
+	return function (groups,num) {
+		var filtered = [];
+		if(num){
+			angular.forEach(groups,function (item) {
+				if(item.parent_id == num){
+					filtered.push(item);
+				}
+			})
+		} else {
+			filtered = groups;
+		}
+		return filtered;
+	}
+});
+
+wfangular.filter('wfPOIsByParentGroupId',function () {
+	return function (pois,num) {
+		var filtered = [];
+		if(num){
+			angular.forEach(pois,function (item) {
+				angular.forEach(item.groups,function (elem) {
+					if(elem.parent_id == num){
+						filtered.push(item);
+					}
+				})
+			})
+		} else {
+			filtered = pois;
+		}
+		return filtered;
+	}
+});
+
 wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function($interval, wayfinder, $timeout) {
 	return {
 		restrict: 'EA',
