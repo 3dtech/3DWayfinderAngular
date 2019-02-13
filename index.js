@@ -157,6 +157,8 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function(
 				function() {
 					if (!!$attrs.id && $attrs.id !== "") {
 						id = $attrs.id;
+						if (template)
+							setup();
 					}
 				}
 			);
@@ -167,6 +169,8 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function(
 				function() {
 					if (!!$attrs.template && $attrs.template !== "") {
 						template = $attrs.template;
+						if (id)
+							setup();
 					}
 				}
 			);
