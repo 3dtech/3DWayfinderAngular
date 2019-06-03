@@ -182,13 +182,13 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function(
 			function setup() {
 				var tpl = '<div style="position: absolute; background-size: cover; background-position: 50% 50%; background-repeat: no-repeat; left: {1}%; top: {2}%; width: {3}%; height: {4}%; {5}" data-id="{0}"></div>';
 				var now = Date.now();
-				
+
 				if (wayfinder.advertisements["template-" + template] && wayfinder.advertisements["template-" + template][id]) {
 					frames = wayfinder.advertisements["template-" + template][id];
 				}
 
 				frames = frames.filter(function (frame) {
-					let enabled = frame.enabled;
+					var enabled = frame.enabled;
 					
 					if (enabled && frame.from_date) {
 						enabled = enabled && (new Date(frame.from_date)).getTime() <= now;
