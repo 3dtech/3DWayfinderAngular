@@ -219,7 +219,7 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function(
 							container.height,
 							image));
 						if (container.advertisement_id > 0 && container.type.substr(0, 5) === 'video') {
-							container.element.append($('<video width="100%" height="auto" src="{0}" loop></video>'.format(
+							container.element.append($('<video width="100%" height="auto" src="{0}" loop muted></video>'.format(
 								WayfinderAPI.advertisements.data.url(container.advertisement_id))));
 						}
 						frame.element.append(container.element);
