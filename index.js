@@ -181,7 +181,8 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function(
 
 			function setup() {
 				var tpl = '<div style="position: absolute; background-size: cover; background-position: 50% 50%; background-repeat: no-repeat; left: {1}%; top: {2}%; width: {3}%; height: {4}%; {5}" data-id="{0}"></div>';
-
+				var now = Date.now();
+				
 				if (wayfinder.advertisements["template-" + template] && wayfinder.advertisements["template-" + template][id]) {
 					frames = wayfinder.advertisements["template-" + template][id];
 				}
