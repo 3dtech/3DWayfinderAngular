@@ -1,0 +1,70 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'publish' ]
+2 info using npm@3.5.2
+3 info using node@v8.10.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/home/taavi/3dtech/3DWayfinderAngular',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /home/taavi/.npm/3dwayfinder-angular/0.1.7/package.tgz not in flight; packing
+9 info lifecycle 3dwayfinder-angular@0.1.7~prepublish: 3dwayfinder-angular@0.1.7
+10 silly lifecycle 3dwayfinder-angular@0.1.7~prepublish: no script for prepublish, continuing
+11 verbose tar pack [ '/home/taavi/.npm/3dwayfinder-angular/0.1.7/package.tgz',
+11 verbose tar pack   '/home/taavi/3dtech/3DWayfinderAngular' ]
+12 verbose tarball /home/taavi/.npm/3dwayfinder-angular/0.1.7/package.tgz
+13 verbose folder /home/taavi/3dtech/3DWayfinderAngular
+14 verbose addLocalTarball adding from inside cache /home/taavi/.npm/3dwayfinder-angular/0.1.7/package.tgz
+15 silly cache afterAdd 3dwayfinder-angular@0.1.7
+16 verbose afterAdd /home/taavi/.npm/3dwayfinder-angular/0.1.7/package/package.json not in flight; writing
+17 verbose afterAdd /home/taavi/.npm/3dwayfinder-angular/0.1.7/package/package.json written
+18 silly publish { name: '3dwayfinder-angular',
+18 silly publish   version: '0.1.7',
+18 silly publish   description: 'Angular service for 3D Wayfinder',
+18 silly publish   main: 'index.js',
+18 silly publish   scripts: {},
+18 silly publish   repository:
+18 silly publish    { type: 'git',
+18 silly publish      url: 'git+https://github.com/3dtech/3DWayfinderAngular.git' },
+18 silly publish   keywords: [ '3d', 'interactive', 'architecture', 'visualisation' ],
+18 silly publish   author: { name: '3D Technologies R&D' },
+18 silly publish   license: 'GPL-3.0',
+18 silly publish   bugs: { url: 'https://github.com/3dtech/3DWayfinderAngular/issues' },
+18 silly publish   homepage: 'https://github.com/3dtech/3DWayfinderAngular#readme',
+18 silly publish   readme: '# 3DWayfinderAngular\nAngular Service for 3D Wayfinder (now supports 2D maps also)\n\n## Getting started\n\n### Install\n```bash \nbower install --save 3dwayfinder-angular\n```\n\nPlease include the following JavaScript files into Your HTML file and inject wfangular into Your Angular app:\n\n```javascript\n<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>\n<!-- FOR 3D Map add the line below -->\n<script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/frak-stable.min.js"></script>\n<script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/Wayfinder3D.min.js"></script>\n<!-- FOR 2D Map add the line below -->\n<script type="text/javascript" src="http://static.3dwayfinder.com/projects/shared/js/minified/Wayfinder2D.min.js"></script>\n<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>\n<script type="text/javascript" src="index.js"></script>\n\n<script>\n    var app = angular.module(\'basictest\', [\'wfangular\']);\n    app.config([\'wfangularConfig\', function(wayfinderConfig){\n    \twayfinderConfig.mapType = \'2d\';\n    }])\n    app.run([\'wfangular\', function(wayfinder) {\n      wayfinder.open();\n    }]);\n</script>\n```\n## Broadcasted events\n* wf.data.loaded - broadcasted when all data is loaded\n* wf.poi.click - broadcasted when user clicks on map. Arguments: POI\n* wf.language.change - broadcasted when language is changed. Arguments: language code {string} (eg en, de etc)\n* wf.floor.change - broadcasted when floor is changed. Arguments: Floor\n* wf.zoom.change - broadcasted when zoom is changed. Arguments: zoom {float}\n* wf.path.floor.change - broadcasted when path animation changes floor: Arguments: Object {current: Floor, next: Floor, destination: Floor}\n\n## Directives\n* wf-banner - displays a banner, ex. id="advertisements" template="default"\n* wf-floor-buttons - displays floor buttons, on-click function to react, can give additional parameters for the button group via group-class and for the buttons via button-class, see example below\n```javascript\n<wf-floors-buttons group-class="btn-group floors-buttons" active-class="btn btn-positive floor"></wf-floors-buttons>\n```\n\n##Options\nConstant wfangularConfig takes the following arguments for changing the behavior:\n*\tassetsLocation: \'http://static.3dwayfinder.com/shared/\',\n*\tapiLocation: \'http://api.3dwayfinder.com\'\n*\tmapType: \'3d\'//2d\n',
+18 silly publish   readmeFilename: 'README.md',
+18 silly publish   _id: '3dwayfinder-angular@0.1.7',
+18 silly publish   _shasum: '1940da17e727f3ef751c290fbda5897475be0222',
+18 silly publish   _from: '.' }
+19 verbose getPublishConfig undefined
+20 silly mapToRegistry name 3dwayfinder-angular
+21 silly mapToRegistry using default registry
+22 silly mapToRegistry registry https://registry.npmjs.org/
+23 silly mapToRegistry uri https://registry.npmjs.org/3dwayfinder-angular
+24 verbose publish registryBase https://registry.npmjs.org/
+25 silly publish uploading /home/taavi/.npm/3dwayfinder-angular/0.1.7/package.tgz
+26 verbose stack Error: auth required for publishing
+26 verbose stack     at CachingRegistryClient.publish (/usr/share/npm/node_modules/npm-registry-client/lib/publish.js:30:14)
+26 verbose stack     at /usr/share/npm/lib/publish.js:137:14
+26 verbose stack     at mapToRegistry (/usr/share/npm/lib/utils/map-to-registry.js:55:3)
+26 verbose stack     at publish_ (/usr/share/npm/lib/publish.js:106:3)
+26 verbose stack     at Array.<anonymous> (/usr/share/npm/node_modules/slide/lib/bind-actor.js:15:8)
+26 verbose stack     at LOOP (/usr/share/npm/node_modules/slide/lib/chain.js:15:14)
+26 verbose stack     at LOOP (/usr/share/npm/node_modules/slide/lib/chain.js:14:28)
+26 verbose stack     at chain (/usr/share/npm/node_modules/slide/lib/chain.js:20:5)
+26 verbose stack     at /usr/share/npm/lib/publish.js:72:5
+26 verbose stack     at RES (/usr/share/npm/node_modules/inflight/inflight.js:23:14)
+27 verbose cwd /home/taavi/3dtech/3DWayfinderAngular
+28 error Linux 4.15.0-43-generic
+29 error argv "/usr/bin/node" "/usr/bin/npm" "publish"
+30 error node v8.10.0
+31 error npm  v3.5.2
+32 error code ENEEDAUTH
+33 error need auth auth required for publishing
+34 error need auth You need to authorize this machine using `npm adduser`
+35 verbose exit [ 1, true ]

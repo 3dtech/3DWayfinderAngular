@@ -186,6 +186,19 @@ wfangular.directive('wfBanner', ['$interval', 'wfangular', '$timeout', function(
 					frames = wayfinder.advertisements["template-" + template][id];
 				}
 
+				frames = frames.filter(function (frame) {
+					let enabled = frame.enabled;
+					
+					if (enabled && frame.from_date) {
+						enabled = enabled && (new Date(frame.from_date)).getTime() <= now;
+					}
+
+					if (enabled && frame.to_date) {
+						enabled = enabled && (new Date(frame.to_date)).getTime() >= now;
+					}
+					return enabled;
+				});
+
 				if (frames && frames.length > 0)
 					$document.find("body").addClass("banner-" + id);
 
